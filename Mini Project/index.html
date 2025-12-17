@@ -74,7 +74,6 @@
     var terms = document.getElementById("terms").checked;
     var gender = document.querySelector('input[name="gender"]:checked');
 
-    // sequential validation (one by one)
     if (name === "") {
       nameErr.innerText = "Name should not be empty";
       return;
@@ -105,7 +104,6 @@
       return;
     }
 
-    // show preview immediately
     preview.innerHTML = `
       <h3>Entered Data</h3>
       <p><b>Name:</b> ${name}</p>
@@ -114,7 +112,6 @@
       <p><b>Course:</b> ${course}</p>
     `;
 
-    // store data
     localStorage.setItem("student", JSON.stringify({
       name: name,
       email: email,
@@ -122,7 +119,6 @@
       course: course
     }));
 
-    // delay then redirect
     setTimeout(function() {
       window.location.href = "success.html";
     }, 3000);
