@@ -1,9 +1,9 @@
 using System;
 
-// ================= DELEGATE =================
+
 public delegate double BillingStrategy(double amount);
 
-// ================= EVENTS =================
+
 public class HospitalEvents
 {
     public event Action<string> OnNotification;
@@ -15,7 +15,7 @@ public class HospitalEvents
     }
 }
 
-// ================= BASE CLASS =================
+
 public abstract class Patient
 {
     public string Name;
@@ -30,7 +30,7 @@ public abstract class Patient
     public abstract double CalculateTreatmentCost();
 }
 
-// ================= DERIVED CLASSES =================
+
 public class OPDPatient : Patient
 {
     public OPDPatient(string name, int age) : base(name, age) { }
@@ -61,7 +61,7 @@ public class EmergencyPatient : Patient
     }
 }
 
-// ================= BILLING SERVICE =================
+
 public class BillingService
 {
     public double ApplyBilling(double amount, BillingStrategy strategy)
@@ -70,7 +70,7 @@ public class BillingService
     }
 }
 
-// ================= MAIN PROGRAM =================
+
 class Program
 {
     static void Main()
