@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form id="form">
+  <table class="form-table">
+    <tr>
+      <td>Name</td>
+      <td><input type="text" id="name"></td>
+      <td class="error" id="nameErr"></td>
+    </tr>
+
+    <tr>
+      <td>Email</td>
+      <td><input type="text" id="email"></td>
+      <td class="error" id="emailErr"></td>
+    </tr>
+
+    <tr>
+      <td>Gender</td>
+      <td>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+      </td>
+      <td class="error" id="genderErr"></td>
+    </tr>
+
+    <tr>
+      <td>Course</td>
+      <td>
+        <select id="course">
+          <option value="">Select</option>
+          <option>Java</option>
+          <option>JavaScript</option>
+          <option>Python</option>
+        </select>
+      </td>
+      <td class="error" id="courseErr"></td>
+    </tr>
+
+    <tr>
+      <td>Terms</td>
+      <td><input type="checkbox" id="terms"> I agree</td>
+      <td class="error" id="termsErr"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="center">
+        <button type="submit">Submit</button>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<div id="preview"></div>
+
+<script>
+  document.getElementById("form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // clear errors
+    nameErr.innerText = emailErr.innerText = genderErr.innerText = courseErr.innerText = termsErr.innerText = "";
+
+    var name = document.getElementById("name").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var course = document.getElementById("course").value;
+    var terms = document.getElementById("terms").checked;
+    var gender = document.querySelector('input[name="gender"]:checked');
+
+    // sequential validation (one by one)
+    if (name === "") {
+      nameErr.innerText = "Name should not be empty";
+      return;
+    }
+
+    if (email === "") {
+      emailErr.innerText = "Email should not be empty";
+      return;
+    }
+
+    if (!email.match(/^[^ ]+@[^ ]+\.[a-z]{2,3}$/)) {
+      emailErr.innerText = "Email should be valid";
+      return;
+    }
+
+    if (!gender) {
+      genderErr.innerText = "Gender must be selected";
+      return;
+    }
+
+    if (course === "") {
+      courseErr.innerText = "Course must be selected";
+      return;
+    }
+
+    if (!terms) {
+      termsErr.innerText = "Terms checkbox must be checked";
+      return;
+    }
+
+    // show preview immediately
+    preview.innerHTML = `
+      <h3>Entered Data</h3>
+      <p><b>Name:</b> ${name}</p>
+      <p><b>Email:</b> ${email}</p>
+      <p><b>Gender:</b> ${gender.value}</p>
+      <p><b>Course:</b> ${course}</p>
+    `;
+
+    // store data
+    localStorage.setItem("student", JSON.stringify({
+      name: name,
+      email: email,
+      gender: gender.value,
+      course: course
+    }));
+
+    // delay then redirect
+    setTimeout(function() {
+      window.location.href = "success.html";
+    }, 3000);
+  });
+</script>
+
+</body>
+</html>
